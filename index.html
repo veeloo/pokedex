@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokedex</title>
+    <link rel="stylesheet" href="src/tailwind.css">
+</head>
+
+<body class="h-full py-5 flex justify-center bg-gray-100">
+
+    <div class="w-full lg:w-2/3 bg-white rounded shadow-sm p-6">
+
+        <div class="text-5xl font-bold">Pokedex</div>
+        <div class="mt-2 text-gray-500 text-md">Find your Pokemon !</div>
+
+        <form class="mt-5 ">
+            <input type="text" placeholder="e.g ivysaur"
+                class="border p-3 rounded w-4/6 mr-2 focus:ring-2 focus:ring-blue-200 focus:outline-none  " id="search">
+            <button type="button" class="p-3 bg-blue-500 hover:bg-blue-600 rounded text-white w-1/6 duration-200"
+                onclick="find()">Find</button>
+        </form>
+
+        <div id="pokemon-data" class="mt-10"></div>
+
+    </div>
+
+</body>
+
+<script>
+
+    const baseURL = 'https://pokeapi.co/api/v2/pokemon'
+
+    let res = ''
+    const el = document.getElementById('pokemon-data');
+
+    function getPokemon() {
+
+        fetch(`${baseURL}?limit=20`)
+            .then(res => res.json())
+            .then(data => {
+                res = data.results;
+
+                res.forEach(item => {
+                    el.innerHTML +=
+                    `
+                        <div class="p-3 mb-3 border-solid border-2 border-gray-100 cursor-pointer rounded">
+                            <div class="text-2xl">${item.name}</div>
+                        </div>
+                    `
+                });
+
+            })
+    }
+
+    getPokemon()
+
+    function find() {
+
+        let search = ''
+
+        let keyword = document.getElementById('search').value;        
+        
+        for(let i = 0 ; i < res.length; i++){        
+            if(res[i].name === keyword){
+                search = res[i].name
+            }
+        }
+        el.innerHTML =
+        `
+            <div class="p-3 mb-3 border-solid border-2 border-gray-100 cursor-pointer rounded">
+                <div class="text-2xl">${search}</div>
+            </div>
+        `
+    }
+
+</script>
+
+</html>
