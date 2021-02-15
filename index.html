@@ -14,9 +14,9 @@
     <div class="container mx-auto py-4">
         <div class="grid row-span-2 lg:grid-cols-12 gap-3">
             <div class="row-span-1 lg:col-span-12">
-                <button class="p-3 bg-green-600 hover:bg-green-700 duration-200 rounded text-white" onclick="randomPokeId()">Random Pokemon</button>       
+                <button class="p-3 bg-green-600 hover:bg-green-700 duration-200 rounded text-white" onclick="randomPokemonData()">Random Pokemon</button>       
             </div>
-            <div class="row-span-1 lg:col-span-6">   
+            <div class="row-span-1 lg:col-span-12 flex justify-center" id="pokemon-container">   
                 <div>
                     <div class='p-3 relative'>
                         <div class='absolute top-0 left-0 z-20 w-14 h-14 text-sm flex justify-center items-center rounded-full bg-gray-100 p-1 font-bold text-gray-600' id="pokemon-height"></div>                    
@@ -25,14 +25,16 @@
                         <div class='w-full bg-white p-10 top-4 rounded-lg text-center '>                
                             <div id="pokemon-data"></div>
                         </div>
-
                     </div>
                 </div>        
             </div>
-            <div class="row-span-1 lg:col-span-6">
-                <div class="hidden">
-                    <div class="bg-white p-10 rounded-lg">
-                        <div id="pokemon-detail"></div>
+            <div class="row-span-1 lg:col-span-6">                
+                    <div class="bg-white p-10 rounded-lg hidden" id="pokemon-detail-container">
+                        <div class="flex mb-5">
+                            <div class="text-gray-600 font-bold">Moves list</div>                                                
+                            <div class="ml-auto cursor-pointer text-red-600 hover:text-red-700" onclick="closeDetail()">close</div>
+                        </div>
+                        <div id="pokemon-detail" class="flex flex-wrap"></div>                        
                     </div>
                 </div>          
             </div>
@@ -43,16 +45,38 @@
 </body>
 
 <script> 
-
+    
     const baseURL = 'https://pokeapi.co/api/v2/pokemon'
     
     const el = document.getElementById('pokemon-data');
+
+    const randomPokeId = () => {
+        return Math.floor(Math.random() * 150) + 1        
+    }
+
+    const randomPokemonData = ()=> {
+        el.innerHTML = '';
+        document.getElementById('pokemon-detail').innerHTML = ''
+        getPokemon(randomPokeId())
+    }
+
+    const closeDetail = ()=> {        
+
+        document.getElementById('pokemon-container').classList.add('flex')
+        document.getElementById('pokemon-container').classList.add('justify-center')
+        document.getElementById('pokemon-container').classList.add('lg:col-span-12')
+
+        document.getElementById('pokemon-detail-container').classList.add('hidden')                
+    }
     
+    let pokeMoves = ''
 
     function getPokemon(id){
         fetch(`${baseURL}/${id}`)
         .then(res => res.json())
-        .then((data , index) => {
+        .then((data , index) => {            
+
+            pokeMoves = data.moves
 
             let name = data.name.charAt(0).toUpperCase() + data.name.slice(1);
 
@@ -131,26 +155,31 @@
                     </div>
                 <div>   
 
-                
-                <button class=" bg-purple-600 hover:bg-purple-800 duration-200 p-3 text-white rounded " onclick='showDetail()'>Show Detail</button> 
+                <button class=" bg-purple-600 hover:bg-purple-800 duration-200 p-3 text-white rounded " onclick="showPokemonDetail()">Show Detail</button> 
             `
         })    
-    }
+    }    
+        
+    const showPokemonDetail = () => {
 
-    const randomPokeId = ()=> {
-        let rand = Math.floor(Math.random() * 150) + 1
-        el.innerHTML = '';
+        document.getElementById('pokemon-container').classList.remove('flex')
+        document.getElementById('pokemon-container').classList.remove('justify-center')
+        document.getElementById('pokemon-container').classList.remove('lg:col-span-12')
+        document.getElementById('pokemon-container').classList.add('lg:col-span-6')
 
-        getPokemon(rand)
+        document.getElementById('pokemon-detail-container').classList.remove('hidden')
+
+        pokeMoves.forEach(item => {
+            document.getElementById('pokemon-detail').innerHTML += `
+                <div class='rounded-full p-1 m-1 px-3 border border-gray-200 cursor-pointer hover:bg-green-500 duration-150 hover:text-white'>
+                    ${item.move.name}
+                <div>
+            `
+        });
     }
 
     getPokemon(randomPokeId())
 
-    const showDetail = (props)=> {
-        document.getElementById('pokemon-detail').classList.remove('hidden')
-
-        
-    }
 
 
 </script>
