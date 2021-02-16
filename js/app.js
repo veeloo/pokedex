@@ -12,77 +12,104 @@ const randomPokemonData = () => {
     getPokemon(randomPokeId());
 };
 
-const closeDetail = () => {
-    document.getElementById("pokemon-container").classList.add("flex");
-    document
-        .getElementById("pokemon-container")
-        .classList.add("justify-center");
-    document
-        .getElementById("pokemon-container")
-        .classList.add("lg:col-span-12");
-
+const closePokemonDetail = () => {
     document.getElementById("pokemon-detail-container").classList.add("hidden");
 };
 
 let pokeMoves = "";
 
-// let img = `<img src=${data.sprites.other.dream_world.front_default}  class="lg:h-28 lg:w-28 "></img> `;
-// let img = `<img src=${ data.sprites.versions["generation-v"]["black-white"].front_default }  class="w-32 h-32"></img>`
-
 function getPokemon(id) {
     fetch(`${baseURL}/${id}`)
         .then((res) => res.json())
         .then((data, index) => {
+
+            
             pokeMoves = data.moves;
 
             let name = data.name.charAt(0).toUpperCase() + data.name.slice(1);
             let type = data.types[0].type.name.charAt(0).toUpperCase() + data.types[0].type.name.slice(1)
 
+
+
+
             el.innerHTML = `
-                <div>
+                <div class='text-center'>
                     <div class='p-3'>
-                        <div class='relative flex items-center'>                
-                            <div class='flex justify-center '>
-                                <img src=${data.sprites.other.dream_world.front_default}  class=" h-24 w-24 lg:h-28 lg:w-28"></img>
+                        <div class="mb-5 text-left">  
+                            <div class='text-gray-200 text-5xl font-extrabold duration-200 cursor-pointer '># ${data.id}</div>                    
+                        </div>
+                        <div class='flex items-center justify-center'>                                        
+                            <div class=''>
+                                <img src=${data.sprites.other.dream_world.front_default}  class=" h-24 w-24 lg:h-52 lg:w-52"></img>
                             </div>                     
                         </div>
                     </div>
 
-                    <div class="p-5 text-left">                    
-                        <div class='rounded-full flex justify-center items-center px-10 w-10 bg-indigo-500 text-gray-200 font-bold'>#${data.id}</div>                    
-                        <div class="text-5xl font-bold text-gray-300 mt-2">${name}</div>                                                                                
+                    <div class="p-5 ">                        
+
                         <div class="my-2">
-                            <div class='text-green-500 font-extrabold text-lg'>${type}</div>                        
+                            <div class="text-5xl mb-2 font-bold text-gray-700 mt-2">${name}</div>                                                                                
+                            <span class='text-green-400 font-extrabold text-lg font-mono'>${type}</span>                        
+                        </div>
+
+                        <div class='my-2'>
+                            <div class='font-mono cursor-pointer text-gray-400 font-bold text-lg space-x-1'>
+                                <div class='hover:text-gray-500 inline-block'>${data.abilities[0].ability.name}</div>                        
+                                <div class='hover:text-gray-500 inline-block'>${data.abilities[1].ability.name}</div>                        
+                            </div>                            
+                        </div>
+
+                        <div class='mt-5 text-right'>                            
+                            <div class=' text-blue-500 hover:text-blue-700 duration-200 select-none cursor-pointer' onclick="showPokemonDetail()" >Show Detail</div>
                         </div>
                     </div>   
                 </div>
+
+                <div class='text-center hidden border-left-3 ml-10 w-1/2' id='pokemon-detail-container'>
+
+                    <div class='text-right cursor-pointer text-red-500 hover:text-red-600 select-none ' onclick="closePokemonDetail()">Close</div>
+
+                    <div class="p-5 text-left ">   
+
+                        <div class="mb-5 font-mono">
+                            <div class='mb-1 font-sans font-bold text-gray-700'>General</div>
+                            <div class='inline-block mr-5'>Height: <span>${data.height}m</span> </div>
+                            <div class='inline-block'>Weight: <span>${data.weight}kg</span> </div>
+                        </div>                        
+
+                        <div class="mb-5 font-mono">
+                            <div class='mb-1 font-sans font-bold text-gray-700'>Abilities</div>
+                            <div class='inline-block mr-5'>${data.abilities[0].ability.name}</div>
+                            <div class='inline-block'>${data.abilities[1].ability.name}</div>
+                        </div>            
+
+                        <div class="mb-5 font-mono">
+                            <div class='mb-1 font-sans font-bold text-gray-700'>Moves</div>
+                            <div id="pokemon-moves" class='flex-warp flex'></div>                            
+                        </div>
+                        
+                    </div>   
+                </div>
+                
             `;
         });
+
+
 }
 
-const showPokemonDetail = () => {
-    document.getElementById("pokemon-container").classList.remove("flex");
-    document
-        .getElementById("pokemon-container")
-        .classList.remove("justify-center");
-    document
-        .getElementById("pokemon-container")
-        .classList.remove("lg:col-span-12");
-    document.getElementById("pokemon-container").classList.add("lg:col-span-6");
-
+const showPokemonDetail = () => {    
     document
         .getElementById("pokemon-detail-container")
         .classList.remove("hidden");
 
     pokeMoves.forEach((item) => {
-        document.getElementById("pokemon-detail").innerHTML += `
-                <div class="rounded-full p-1 m-1 px-3 border border-gray-200 cursor-pointer hover:bg-green-500 duration-150 hover:text-white">
-                    ${item.move.name}
-                <div>
+        document.getElementById("pokemon-moves").innerHTML += `
+                <div>${item.move.name}<div>
             `;
     });
+
 };
 
-// getPokemon(randomPokeId());
+getPokemon(randomPokeId());
 
-getPokemon(1)   
+// getPokemon(1)   
