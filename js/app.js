@@ -65,32 +65,32 @@ function getPokemon(id) {
                     </div>   
                 </div>
 
-                <div class='text-center hidden border-left-3 ml-10 w-1/2' id='pokemon-detail-container'>
+                <div class='text-left hidden ml-10' id='pokemon-detail-container'>
 
-                    <div class='text-right cursor-pointer text-red-500 hover:text-red-600 select-none ' onclick="closePokemonDetail()">Close</div>
+                    <div class='cursor-pointer mb-5 text-right text-red-500 hover:text-red-600 select-none ' onclick="closePokemonDetail()">Close</div>
 
-                    <div class="p-5 text-left ">   
+                    <div class="mb-5 font-mono">
+                        <div class='mb-1 font-sans font-bold text-gray-700'>General</div>
+                        <div class='inline-block mr-5'>Height: <span>${data.height}m</span> </div>
+                        <div class='inline-block'>Weight: <span>${data.weight}kg</span> </div>
+                    </div>                        
 
-                        <div class="mb-5 font-mono">
-                            <div class='mb-1 font-sans font-bold text-gray-700'>General</div>
-                            <div class='inline-block mr-5'>Height: <span>${data.height}m</span> </div>
-                            <div class='inline-block'>Weight: <span>${data.weight}kg</span> </div>
-                        </div>                        
+                    <div class="mb-5 font-mono">
+                        <div class='mb-1 font-sans font-bold text-gray-700'>Abilities</div>
+                        <div class='inline-block mr-5'>${data.abilities[0].ability.name}</div>
+                        <div class='inline-block'>${data.abilities[1].ability.name}</div>
+                    </div>            
 
-                        <div class="mb-5 font-mono">
-                            <div class='mb-1 font-sans font-bold text-gray-700'>Abilities</div>
-                            <div class='inline-block mr-5'>${data.abilities[0].ability.name}</div>
-                            <div class='inline-block'>${data.abilities[1].ability.name}</div>
-                        </div>            
-
-                        <div class="mb-5 font-mono">
-                            <div class='mb-1 font-sans font-bold text-gray-700'>Moves</div>
-                            <div id="pokemon-moves" class='flex-warp flex'></div>                            
-                        </div>
+                    <div class="mb-5 font-mono flex-wrap flex">
                         
-                    </div>   
-                </div>
+                        
+                    </div>
+                    
                 
+                    
+
+                </div>
+
             `;
         });
 
