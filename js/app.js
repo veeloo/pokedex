@@ -27,6 +27,7 @@ const closeDetail = () => {
 let pokeMoves = "";
 
 // let img = `<img src=${data.sprites.other.dream_world.front_default}  class="lg:h-28 lg:w-28 "></img> `;
+// let img = `<img src=${ data.sprites.versions["generation-v"]["black-white"].front_default }  class="w-32 h-32"></img>`
 
 function getPokemon(id) {
     fetch(`${baseURL}/${id}`)
@@ -35,39 +36,26 @@ function getPokemon(id) {
             pokeMoves = data.moves;
 
             let name = data.name.charAt(0).toUpperCase() + data.name.slice(1);
+            let type = data.types[0].type.name.charAt(0).toUpperCase() + data.types[0].type.name.slice(1)
 
-            document.getElementById("pokemon-height").innerHTML =
-                data.height + " m";
-            document.getElementById("pokemon-weight").innerHTML =
-                data.weight + " kg";
-
-            el.innerHTML = `                         
-            <div class="p-3">                
-                
-                <div class='p-5 border border-blue-500'>
-                    <div class="font-extrabold text-5xl text-gray-200"># ${
-                        data.id
-                    }</div>    
-                    <div class='border border-blue-500 mt-3 flex justify-center'>
-                        <img src=${
-                            data.sprites.other.dream_world.front_default
-                        }  class="lg:h-28 lg:w-28 "></img>
-                    </div>                     
-                </div>
-
-                <div class="p-5 text-center border border-blue-500">
-                    <div class="text-5xl font-bold text-gray-600 mt-2">${name}</div>                                                            
-                    <div class="my-2">
-                        <span class='font-bold text-sm text-green-500' id="pokemon-type">${data.types[0].type.name.toUpperCase()}</span>                         
-                        <span class='font-bold text-sm ml-4 text-gray-300'>${data.types[1].type.name.toUpperCase()}</span>
+            el.innerHTML = `
+                <div>
+                    <div class='p-3'>
+                        <div class='relative flex items-center'>                
+                            <div class='flex justify-center '>
+                                <img src=${data.sprites.other.dream_world.front_default}  class=" h-24 w-24 lg:h-28 lg:w-28"></img>
+                            </div>                     
+                        </div>
                     </div>
-                </div>   
 
-                <div class="text-center p-5 border border-blue-500">
-                    <button class=" bg-purple-600 hover:bg-purple-800 duration-200 p-3 text-white rounded " onclick="showPokemonDetail()">Show Detail</button> 
+                    <div class="p-5 text-left">                    
+                        <div class='rounded-full flex justify-center items-center px-10 w-10 bg-indigo-500 text-gray-200 font-bold'>#${data.id}</div>                    
+                        <div class="text-5xl font-bold text-gray-300 mt-2">${name}</div>                                                                                
+                        <div class="my-2">
+                            <div class='text-green-500 font-extrabold text-lg'>${type}</div>                        
+                        </div>
+                    </div>   
                 </div>
-
-            </div>
             `;
         });
 }
@@ -95,4 +83,6 @@ const showPokemonDetail = () => {
     });
 };
 
-getPokemon(randomPokeId());
+// getPokemon(randomPokeId());
+
+getPokemon(1)   
