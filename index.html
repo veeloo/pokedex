@@ -9,13 +9,24 @@
 
 </head>
 
-<body class="bg-gray-200 flex h-screen justify-center flex-warp items-center">
+<body class="bg-gray-100">
 
 
-    <div id="pokemon-data" class="bg-white m-auto rounded-lg pt-5 px-10 flex"></div>
+    <div id="app">
+        <div class="container h-full mx-auto flex items-center justify-center">
+            <div class="bg-white border rounded-lg p-5 w-6/12 flex flex-col items-center justify-center relative">
+                <div class="text-9xl font-extrabold text-gray-200 select-none">#{{ pokemonId }}</div>                            
+                <img :src=" pokemonData.sprites.other.dream_world.front_default" class="h-20 w-20 absolute z-10 bottom-0" alt="">                                
+            </div>
+        </div>
+    </div>
 
+    <!-- vue cdn -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
 
-    <script src="js/app.js"></script>
+    <script src="js/Pokemon.js" ></script>    
+    <script src="js/index.js"></script>
+
 
 </body>
 
