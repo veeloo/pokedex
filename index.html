@@ -15,55 +15,85 @@
     <div id="app">
         <div class="container ">
 
-            <div class="flex space-x-20 bg-gray-100 w-screen rounded pl-10 py-10">
+            <div class="flex space-x-5 justify-center bg-gray-100 w-screen rounded p-10">
 
-                    <div class="bg-white rounded-lg p-5 w-3/12 flex flex-col items-center relative ">
+                    <div class="bg-white shadow-sm rounded-lg p-5  flex flex-col items-center relative ">
 
-                        <div class="flex absolute content-evenly border border-red-500 w-full top-0 p-1 ">
-                            <div class="rounded-full bg-gray-100 h-10 w-10 flex items-center justify-center text-xs ">{{pokemonData.weight}} Kg</div>
-                            <div class="rounded-full bg-gray-100 h-10 w-10 flex items-center justify-center text-xs ">{{pokemonData.weight}} Kg</div>
+                        <div class="flex absolute content-evenly w-full top-0 p-1 ">
+                            <div class="rounded-full bg-gray-100 h-10 w-10 flex items-center justify-center text-xs ">{{pokemon.weight}} Kg</div>
+                            <div class="rounded-full bg-gray-100 h-10 w-10 ml-auto flex items-center justify-center text-xs ">{{pokemon.height}} M</div>
                         </div>
 
-                        <div class="flex flex-col items-center box-content">
+                        <div class="flex flex-col mt-10 items-center box-content">
                             <div class=" text-2xl md:text-4xl lg:text-8xl font-extrabold text-gray-200 select-none tracking-widest">#{{ pokemonId }}</div>                            
-                            <img :src="pokemonData.sprites.other.dream_world.front_default" class="h-16 w-16  md:-mt-14 lg:-mt-16 " :alt="'Pokedex | '+pokemonData.name">                
+                            <img :src="pokemon.sprites.other.dream_world.front_default" class="h-16 w-16  md:-mt-14 lg:-mt-16 " :alt="'Pokedex | '+pokemon.name">
                         </div>
                         <div class="pt-8 text-center">                            
-                            <div class='lg:text-3xl font-extrabold font-sans text-gray-700'>{{pokemonData.name.charAt(0).toUpperCase() + pokemonData.name.slice(1)  }}</div>
-                        
+                            <div class='lg:text-3xl font-extrabold  text-gray-700'>{{pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)  }}</div>
+                            <div class="mb-2 text-sm text-gray-500 font-semibold">{{pokemonSpecies.genera[7].genus}}</div>
+
                             <div class="space-x-2">
-                                <div v-for="type in pokemonData.types" class="inline"> 
+                                <div v-for="type in pokemon.types" class="inline"> 
                                     <div class="font-bold inline text-sm uppercase" :class="{'text-green-500' :type.type.name == 'grass' , 'text-purple-500' : type.type.name =='poison'}" >{{type.type.name}}</div>
                                 </div>
                             </div>
     
-                            <div class="mt-5 space-x-2">
-                                <div v-for="(ability , index) in pokemonData.abilities" class="inline">
-                                    <div class="cursor-pointer hover:text-gray-600 font-bold duration-200 text-gray-500 inline text-base">{{ability.ability.name.charAt(0).toUpperCase() + ability.ability.name.slice(1)}}</div>
+                            <div class="mt-3 space-x-2">
+                                <div v-for="(ability , index) in pokemon.abilities" class="inline">
+                                    <div class="cursor-pointer hover:text-gray-600 font-semibold duration-200 text-gray-500 inline text-base">{{ability.ability.name.charAt(0).toUpperCase() + ability.ability.name.slice(1)}}</div>
                                 </div>
                             </div>                        
                         </div>
                     </div>                
                 
 
-                <div class="flex items-center " >
-                    <table>
-                        <tr v-for="stat in pokemonData.stats">
-                            <td class="text-right font-bold text-gray-600">{{stat.stat.name.charAt(0).toUpperCase() + stat.stat.name.slice(1) }}</td>
-                            <td class="pl-5 font-bold text-gray-600">{{stat.base_stat}}</td>                                
-                            <td class="pl-5">
-                                
-                            </td>
-                        </tr>
-                    </table>                                            
+                <div class="flex flex-col bg-white rounded p-10 shadow-sm">
+                    <div class="mb-5">
+                        <div class="mb-1 font-bold text-gray-700 text-lg ">Base Stats</div>
+                        <table class="font-semibold text-gray-600">
+                            <tr v-for="stat in pokemon.stats">
+                                <td>{{stat.stat.name.charAt(0).toUpperCase() + stat.stat.name.slice(1) }}</td>
+                                <td class="px-10">{{stat.base_stat}}</td>                            
+                            </tr>
+                        </table>            
+                    </div>
+                    
+                    <div class="font-bold text-gray-700 text-lg">Habitat :
+                        <span class="font-semibold text-base">{{pokemonSpecies.genera[7].genus}}</span>                        
+                    </div>
+                    
+                    <div class="font-bold text-gray-700 text-lg">Habitat :
+                        <span class="font-semibold text-base">{{pokemonSpecies.genera[7].genus}}</span>                        
+                    </div>
 
                 </div>
 
-                <div class="flex items-center justify-center">
-                    <button class="p-3 bg-green-600 max-w-md rounded-lg text-white hover:bg-green-700 duration-200 ">Show Detail</button>
+                <div class="bg-white p-10  ">
+                    <div class="mb-3 font-bold text-gray-700 text-lg ">Evolution Chain</div>
+                    <div class="flex justify-center items-center space-x-28 pt-5">
+                        <div>                            
+                            <img :src="pokemon.sprites.other.dream_world.front_default" class="h-16 w-16" :alt="'Pokedex | '+pokemon.name">                                                        
+                            <div class="mt-2">
+                                <div class="text-gray-700 font-bold">{{pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1) }}</div>
+                            </div>
+                        </div>
+                        <div>
+                            <img :src="pokemon.sprites.other.dream_world.front_default" class="h-16 w-16" :alt="'Pokedex | '+pokemon.name">                                                        
+                            <div class="mt-2">
+                                <div class="text-gray-700 font-bold">{{pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1) }}</div>
+                            </div>
+                        </div>
+                        <div>
+                            <img :src="pokemon.sprites.other.dream_world.front_default" class="h-16 w-16" :alt="'Pokedex | '+pokemon.name">                                                        
+                            <div class="mt-2">
+                                <div class="text-gray-700 font-bold">{{pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1) }}</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
             </div>
+        
 
         </div>
     </div>
