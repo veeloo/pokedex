@@ -9,16 +9,16 @@ const app = new Vue({
         pokemonEvolutionChain : [],
     },
     mounted(){
-        this.getPokemon()
+        this.getPokemon(this.randomPokeId())
     },
     methods : {
         randomPokeId(){            
             return Math.floor(Math.random() * 150) +1;            
         },
-        getPokemon(){
-
-            // 
-            fetch(`${this.baseURL}pokemon/`+1)
+        getPokemon(id){
+        
+            // get pokemon data
+            fetch(`${this.baseURL}pokemon/`+id)
             .then(res => res.json())
             .then(data => {
                 this.pokemon = data     
@@ -26,13 +26,15 @@ const app = new Vue({
                 this.pokemonId = pokemonId.padStart(3,"0")
             })
         
-            fetch(`${this.baseURL}pokemon-species/`+1)
+            // get pokemon species data
+            fetch(`${this.baseURL}pokemon-species/`+id)
             .then(res => res.json())
             .then(data => {                
                 this.pokemonSpecies = data
             })
 
-            fetch(`${this.baseURL}evolution-chain/`+1)
+            // get pokemon evolution chain data
+            fetch(`${this.baseURL}evolution-chain/`+id)
             .then(res => res.json())
             .then(data => {
                 console.log(data)
