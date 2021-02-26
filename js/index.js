@@ -6,7 +6,7 @@ const app = new Vue({
         pokemon : '',    
         pokemonSpecies : '',
         pokemonId : '',          
-        pokemonEvolutionChain : [],
+        evolutionChain : ''
     },
     mounted(){
         this.getPokemon(this.randomPokeId())
@@ -36,8 +36,8 @@ const app = new Vue({
             // get pokemon evolution chain data
             fetch(`${this.baseURL}evolution-chain/`+id)
             .then(res => res.json())
-            .then(data => {
-                console.log(data)
+            .then(data => {              
+                this.evolutionChain = this.data  
             })
 
         }
